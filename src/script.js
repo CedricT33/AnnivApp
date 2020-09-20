@@ -95,6 +95,24 @@ function clickModif(element) {
 
 /** ----- AU CLIC SUR AJOUTER UNE VIGNETTE ------ */
 function clickAjout() {
+    
+    // affichage de l'ajout sur page accueil
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choiceResult => {
+            console.log(choiceResult.outcome);
+
+            if (choiceResult.outcome === 'dismissed') {
+                console.log('User cancelled installation');
+            }
+            else {
+                console.log('User added to home screen');
+            }
+        });
+
+        deferredPrompt = null;
+    }
+
     faireApparaitrePageFormulaire(); 
 }
 
