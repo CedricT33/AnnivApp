@@ -1,0 +1,410 @@
+/** ------------POLICES---------------- */
+
+@font-face {
+    font-family: 'fontawesome';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../fonts/fa-solid-900.eot);
+    src: url(../fonts/fa-solid-900.eot?#iefix) format("embedded-opentype"), 
+    url(../fonts/fa-solid-900.woff2) format("woff2"), 
+    url(../fonts/fa-solid-900.woff) format("woff"), 
+    url(../fonts/fa-solid-900.ttf) format("truetype"), 
+    url(../fonts/fa-solid-900.svg#fontawesome) format("svg"); 
+}
+
+@font-face {
+    font-family: 'spartan-black';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url(../fonts/Spartan-Black.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: 'spartan-light';
+    font-style: normal;
+    font-weight: 400;
+    font-display: block;
+    src: url(../fonts/Spartan-Light.ttf) format("truetype");
+}
+
+
+
+/** ------------ANIMATIONS---------------- */
+
+@keyframes apparition {
+    0% {
+      -webkit-transform: scale(0);
+              transform: scale(0);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: scale(1);
+              transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+
+/** ------------BASES---------------- */
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    background-color: #22262e;
+    font-family: 'spartan-light';
+    color: #e6e6e6;
+    font-variant-caps: small-caps;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+#swipper, #date, #validation-container {
+    display: flex;
+    justify-content: center;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#list-container, .vignette-container, .caracteristique, #ajout-container.show, #formulaire-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#list-container {
+    overflow-y: scroll;
+}
+
+#logo {
+    font-family: 'spartan-black';
+    font-size: 21px;
+    transform: scaleY(0.9);
+    letter-spacing: -2px;
+    padding: 38px;
+}
+
+#logo, .age, .astro-normal, .astro-chinois {
+    color: #47b5b0;
+}
+
+#swipper.hide, #list-container.hide, #img-ajouter.hide, #ajout-container {
+    display: none;
+}
+
+#img-retour.show {
+    display: block;
+}
+
+
+/** ------------VIGNETTES---------------- */
+
+.vignette-container {
+    border-top: 1px solid #969696;
+    -webkit-tap-highlight-color: rgba(71, 181, 176, 0.5);
+}
+
+.vignette-container:last-child {
+    border-bottom: 1px solid #969696;
+}
+
+.vignette-principal, .nom-prenom, .accordeon-content, .btn-suppr, .btn-modif {
+    display: flex;
+}
+
+.accordeon-content {
+    justify-content: space-evenly;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 1000ms;
+}
+
+.accordeon-content.active {
+    max-height: 5rem;
+}
+
+.vignette-principal {
+    justify-content: space-between;
+}
+
+.caracteristique {
+    justify-content: center;
+}
+
+.age span {
+    font-size: 12px;
+}
+
+.age, .astro-normal, .astro-chinois {
+    display: none;
+}
+
+.age.active, .astro-normal.active, .astro-chinois.active {
+    display: block;
+}
+
+.profil {
+    padding: 7px 25px 5px 25px;
+}
+
+.caracteristique{
+    padding: 5px 25px 5px 25px;
+}
+
+.nom-prenom {
+    font-size: 22px;
+    color: white;
+}
+
+.date-naissance, .supprimer, .modifier {
+    color: #b4b4b4;
+    font-size: 15px;
+    transform: scaleY(0.9);
+    padding-top: 5px;
+}
+
+.supprimer, .modifier {
+    padding-left: 10px;
+}
+
+.btn-suppr, .btn-modif {
+    margin: 20px;
+}
+
+
+/** ------------PAGINATION---------------- */
+
+header a {
+    padding: 37px 40px;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#gateau, #astro, #astrochinois {
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 109px;
+    width: 126px;
+    display: none;
+}
+
+#gateau.active, #astro.active, #astrochinois.active {
+    display: block;
+    animation: apparition 0.3s ease-out;
+}
+
+#gateau {
+    background-image: url(../images/gateau.png);
+}
+
+#astro {
+    background-image: url(../images/astro.png);
+}
+
+#astrochinois {
+    background-image: url(../images/astrochinois.png);
+    width: 162px;
+}
+
+#img-ajouter, #img-params, .img-suppr, .img-modif, #img-retour {
+    font-family: 'fontawesome';
+    font-size: 23px;
+}
+
+#img-retour {
+    display: none;
+}
+
+#img-retour::before {
+    content: "\f137";
+}
+
+#img-ajouter:before {
+    content: "\f055";
+}
+
+#img-params:before {
+    content: "\f013";
+}
+
+.img-suppr:before {
+    content: "\f1f8";
+}
+
+.img-modif:before {
+    content: "\f303";
+}
+
+/** ------------FORMULAIRE---------------- */
+
+#index, #index-popin {
+    position: absolute;
+    top: -1000px;
+}
+
+#date {
+    justify-content: space-between;
+}
+
+#formulaire-container {
+    padding: 40px;
+}
+
+#ajout-container {
+    justify-content: space-around;
+}
+
+#saisieJour, #saisieMois, #saisieAnnee, #saisieNom, #saisiePrenom {
+    font-variant-caps: small-caps;
+    font-size: 22px;
+    font-family: 'spartan-light';
+    transform: scaleY(0.9);
+    padding: 13px 7px 8px 7px;
+    margin-top: 30px;
+    background-color: #22262e;
+    border: 1px solid #bbb;
+    color: #e6e6e6;
+    text-decoration: none;
+}
+
+#saisieJour::placeholder, #saisieMois::placeholder,
+#saisieAnnee::placeholder, #saisieNom::placeholder, #saisiePrenom::placeholder {
+    color: #bbb;
+}
+
+#saisieJour, #saisieMois {
+    width: 65px;
+    text-align: center;
+}
+
+#saisieAnnee {
+    width: 90px;
+    text-align: center;
+}
+
+#btn-ok, #btn-popin {
+    font-family: 'spartan-black';
+    font-size: 25px;
+    transform: scaleY(0.9);
+    padding: 18px 40px 12px 40px;
+    background-color: #47b5b0;
+    border: 1px solid #fff;
+    color: #22262e;
+    text-decoration: none;
+    margin-bottom: 80px;
+    cursor: pointer;
+}
+
+input:invalid {
+    border: 2px dashed red;
+  }
+
+
+/** ------------POPIN---------------- */
+
+#popin, #popin-masque {
+    display: none;
+}
+
+#popin-titre, #popin-corps, #btn-popin, #validation-container-popin  {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#popin-titre, #popin-corps, #btn-popin {
+    margin: 30px;
+}
+
+#popin-titre {
+    font-family: 'spartan-black';
+    font-size: 20px;
+    transform: scaleY(0.9);
+}
+
+#popin-corps {
+    font-size: 20px;
+    line-height: 35px;
+    padding: 25px 0px 0px;
+}
+  
+#popin.open {
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    width: 80%;
+    position: fixed;
+    box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    top: 25%;
+    left: 0;
+    right: 0;
+    background: #22262e;
+    margin: auto;
+    padding: 0.5em;
+    animation: apparition 0.3s ease-out;
+}
+  
+#popin-masque.open {
+    z-index: 1000;
+    display: block;
+    opacity: 0.5;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+}
+
+/** ------------PRESENTATION---------------- */
+
+#fleche-presentation {
+    background-image: url(../images/Fleche.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 145px;
+    width: 80px;
+    position: absolute;
+    top: 75px;
+    left: 75px;
+}
+
+#presentation-container, #texte-presentation-container, #titre-presentation {
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    color: #b4b4b4;
+}
+
+#titre-presentation {
+    font-family: 'spartan-black';
+    font-size: 30px;
+    transform: scaleY(0.9);
+}
+
+#texte-presentation {
+    font-size: 23px;
+    transform: scaleY(0.9);
+}
+
+#texte-presentation strong {
+    font-family: 'spartan-black';
+}
+
+#fleche-presentation.hide, #presentation-container.hide {
+    display: none;
+}
