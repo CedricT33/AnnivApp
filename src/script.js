@@ -5,6 +5,14 @@ var SIGNES_ASTRO = ["Capricorne", "Verseau", "Poisson", "Bélier", "Taureau", "G
 var LIMITES_SIGNES_ASTRO = [20,19,20,20,20,21,22,22,21,22,21,21];
 var SIGNES_CHINOIS = ["Rat", "Boeuf", "Tigre", "Lapin", "Dragon", "Serpent", "Cheval",
                     "Chèvre", "Singe", "Coq","Chien", "Cochon"];
+var optionsNotification = {
+    body: '',
+    icon: '/images/logo96.png',
+    lang: 'fr-FR',
+    vibrate: [100, 50, 200],
+    badge: '/images/logo96.png',
+    tag: 'confirm-notification'
+};
 
 //** -----DESTRUCTION POPIN----- */
 function detruirePopin() {
@@ -86,11 +94,24 @@ function clickSuppr(element) {
     ouverturePopin(prenom);
 }
 
+//TODO en test
+function calculTempsJusquAAnniv(jour, mois, annee, heureNotif) {
+    var now = new Date();
+    var dateDAnniv = new Date(annee, mois-1, jour, heureNotif, 59, 0, 0) - now;
+    console.log(dateDAnniv);
+    optionsNotification.body = 'Truc (30 ans)';
+    registerPeriodicNotification(optionsNotification, dateDAnniv);
+}
+
 /** ----- AU CLIC SUR MODIFIER UNE VIGNETTE ------ */
 function clickModif(element) {
     var index = element.id.substr(6,1);
     remplirFormulaire(index);  
     faireApparaitrePageFormulaire();
+
+    //TODO a supprimer
+    calculTempsJusquAAnniv(26, 9, 2020, 17);
+
 }
 
 /** ----- AU CLIC SUR AJOUTER UNE VIGNETTE ------ */
@@ -112,7 +133,6 @@ function clickAjout() {
 
         deferredPrompt = null;
     }
-
     faireApparaitrePageFormulaire(); 
 }
 

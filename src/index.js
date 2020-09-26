@@ -14,4 +14,49 @@ window.addEventListener('beforeinstallprompt', event => {
     event.preventDefault();
     deferredPrompt = event;
     return false;
-})
+});
+
+// function displayConfirmNotification(options, delai) {
+//     if ("showTrigger" in Notification.prototype) {
+//         console.log('shoooowtrigger supported !')
+//       }
+//       else {
+//         console.log('showtrigger NOT supported !')
+//       }
+//     if ('serviceWorker' in navigator) {
+//         navigator.serviceWorker.ready.then(swreg => {
+//             setTimeout(function() {
+//                 swreg.showNotification('Anniversaire !!', options);
+//             }, delai);
+            
+//         });
+//     }
+// }
+
+function registerPeriodicNotification(options, delai) {
+    navigator.serviceWorker.ready.then(swreg => {
+        console.log('enregistrement periodic !', swreg);
+        var titre = 'Anniversaire de ' + options.body;
+        return swreg.periodicSync.register(titre, {
+            minInterval: 2000,
+          }).then( function() {
+              return swreg;
+          });
+    }).then(sw => {
+        sw.periodicSync.getTags().then(tags => {
+            console.log('tags :', tags);
+            console.log('ps : ', sw.periodicSync);
+          });  
+    }).catch(e => {
+        console.log('Periodic Sync could not be registered!', e);
+    });
+}
+
+function askForNotificationPermission() {
+    console.log(Notification);
+    Notification.requestPermission(result => {
+        if (result === 'granted') {
+            console.log('permission notifs OK !');
+        }
+    })
+}

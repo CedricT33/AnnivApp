@@ -1,5 +1,5 @@
 // Constantes
-const VERSION = "01.00.003";
+const VERSION = "01.00.004";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
@@ -63,4 +63,10 @@ self.addEventListener("activate", event => {
             }));
         })
     )
+});
+
+// Réveil du SW lors de la réception de l'évenement 'periodicSync'
+// Lancement de la notification.
+self.addEventListener('periodicsync', event => {
+    console.log('[Service Worker] PeriodicSync : ', event)
 });
