@@ -36,9 +36,9 @@ window.addEventListener('beforeinstallprompt', event => {
 function registerPeriodicNotification(options, delai) {
     navigator.serviceWorker.ready.then(swreg => {
         console.log('enregistrement periodic !', swreg);
-        var titre = 'Anniversaire de ' + options.body;
+        var titre = 'Anniversaire_de_' + options.body;
         return swreg.periodicSync.register(titre, {
-            minInterval: 2000,
+            minInterval: 10000,
           }).then( function() {
               return swreg;
           });

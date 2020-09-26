@@ -99,7 +99,7 @@ function calculTempsJusquAAnniv(jour, mois, annee, heureNotif) {
     var now = new Date();
     var dateDAnniv = new Date(annee, mois-1, jour, heureNotif, 59, 0, 0) - now;
     console.log(dateDAnniv);
-    optionsNotification.body = 'Truc (30 ans)';
+    optionsNotification.body = 'Truc_30_ans';
     registerPeriodicNotification(optionsNotification, dateDAnniv);
 }
 
