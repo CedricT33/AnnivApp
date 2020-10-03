@@ -1,21 +1,22 @@
 // Constantes
-const VERSION = "01.00.007";
+const VERSION = "01.00.008";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
-        "/",
-        "/index.html",
-        "/src/index.js",
-        "/src/style.css", 
-        "/src/script.js",
-        "/fonts/fa-solid-900.ttf",
-        "/fonts/Spartan-Black.ttf", 
-        '/fonts/Spartan-Light.ttf',
-        "/images/astro.png",
-        "/images/astrochinois.png",
-        "/images/Fleche.png",
-        "/images/gateau.png",
-        "/manifest.json"];
+        "./",
+        "./index.html",
+        "./src/index.js",
+        "./src/style.css", 
+        "./src/script.js",
+        "./fonts/fa-solid-900.ttf",
+        "./fonts/Spartan-Black.ttf", 
+        "./fonts/Spartan-Light.ttf",
+        "./images/astro.png",
+        "./images/astrochinois.png",
+        "./images/Fleche.png",
+        "./images/gateau.png",
+        "./manifest.json"
+    ];
 
 // Install SW
 self.addEventListener("install", event => {
