@@ -44,6 +44,7 @@ self.addEventListener("fetch", event => {
                 return fetch(event.request).then(response => {
                     caches.open(CACHE_NAME_DYNAMIC).then(cache => {
                         cache.put(event.request.url, response.clone());
+                        console.log('[Service Worker] retour de la requete : ', response);
                         return response;
                     }).catch(error => {
                         console.log('[Service Worker] erreur d\'ouverture du cache dynamic : ', error);
