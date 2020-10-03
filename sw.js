@@ -1,5 +1,5 @@
 // Constantes
-const VERSION = "01.00.006";
+const VERSION = "01.00.007";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
