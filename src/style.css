@@ -91,6 +91,7 @@ header {
     transform: scaleY(0.9);
     letter-spacing: -2px;
     padding: 38px;
+    -webkit-tap-highlight-color: transparent;
 }
 
 #logo, .age, .astro-normal, .astro-chinois {
