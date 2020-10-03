@@ -97,10 +97,12 @@ function clickSuppr(element) {
 //TODO en test
 function calculTempsJusquAAnniv(jour, mois, annee, heureNotif) {
     var now = new Date();
-    var dateDAnniv = new Date(annee, mois-1, jour, heureNotif, 59, 0, 0) - now;
-    console.log(dateDAnniv);
+    //var dateDAnniv = new Date(annee, mois-1, jour, heureNotif, 59, 0, 0) - now;
+    //console.log(dateDAnniv);
     optionsNotification.body = 'Truc_30_ans';
-    registerPeriodicNotification(optionsNotification, dateDAnniv);
+    optionsNotification.showTrigger = new TimestampTrigger(now + 10000);
+    console.log(now);
+    displayScheduledNotification(optionsNotification);
 }
 
 /** ----- AU CLIC SUR MODIFIER UNE VIGNETTE ------ */
@@ -109,8 +111,8 @@ function clickModif(element) {
     remplirFormulaire(index);  
     faireApparaitrePageFormulaire();
 
-    //TODO a supprimer
-    calculTempsJusquAAnniv(26, 9, 2020, 17);
+    //TODO a supprimer (en test)
+    //calculTempsJusquAAnniv(26, 9, 2020, 17);
 
 }
 

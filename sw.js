@@ -1,5 +1,5 @@
 // Constantes
-const VERSION = "01.00.005";
+const VERSION = "01.00.006";
 const CACHE_NAME_STATIC = "static-" + VERSION;
 const CACHE_NAME_DYNAMIC = "dynamic-" + VERSION;
 const urlsToCache = [ 
@@ -19,21 +19,25 @@ const urlsToCache = [
 
 // Install SW
 self.addEventListener("install", event => {
-    console.log('[Service Worker] Installing Service Worker...');
+    console.log('[Service Worker] [version : ' + VERSION + ']');
+    console.log('[Service Worker] [1] Installation Service Worker...');
     event.waitUntil(
         caches.open(CACHE_NAME_STATIC).then(cache => {
-            console.log('[Service Worker] Precaching App Shell');
+            console.log('[Service Worker] Precache des fichiers');
             return cache.addAll(urlsToCache);
-        }).catch(error => {})
+        }).catch(error => {
+            console.log('[Service Worker] Erreur de precache : ', error);
+        })
     );
 });
 
 // Listen for request
 self.addEventListener("fetch", event => {
-    console.log('[Service Worker] Fetching something : ', event.request.url);
+    console.log('[Service Worker] Recherche... : ', event.request.url);
     event.respondWith(
         caches.match(event.request.url).then(response => {
             if (response) {
+                console.log('[Service Worker] retour du cache : ', response.url);
                 return response;
             }
             else {
@@ -41,8 +45,11 @@ self.addEventListener("fetch", event => {
                     caches.open(CACHE_NAME_DYNAMIC).then(cache => {
                         cache.put(event.request.url, response.clone());
                         return response;
-                    })
+                    }).catch(error => {
+                        console.log('[Service Worker] erreur d\'ouverture du cache dynamic : ', error);
+                    });
                 }).catch(error => {
+                    console.log('[Service Worker] erreur de fetch : ', error);
                     //TODO offline.html
                 });
             }
@@ -52,12 +59,12 @@ self.addEventListener("fetch", event => {
 
 // Activate SW
 self.addEventListener("activate", event => {
-    console.log('[Service Worker] Activating Service Worker...');
+    console.log('[Service Worker] [2] Activation du Service Worker...');
     event.waitUntil(
         caches.keys().then((keyList) => {
             return Promise.all(keyList.map(key => {
                 if (key !== CACHE_NAME_STATIC && key !== CACHE_NAME_DYNAMIC) {
-                    console.log('[Service Worker] Removing old cache : ', key);
+                    console.log('[Service Worker] Suppression du vieux cache : ', key);
                     return caches.delete(key);
                 }
             }));
@@ -68,5 +75,5 @@ self.addEventListener("activate", event => {
 // Réveil du SW lors de la réception de l'évenement 'periodicSync'
 // Lancement de la notification.
 self.addEventListener('periodicsync', event => {
-    console.log('[Service Worker] PeriodicSync : ', event)
+    console.log('[Service Worker] PeriodicSync : ', event);
 });
