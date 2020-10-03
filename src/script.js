@@ -1,4 +1,5 @@
 /** ----- VALUES ------ */
+var version = '';
 var storage = [];
 var SIGNES_ASTRO = ["Capricorne", "Verseau", "Poisson", "Bélier", "Taureau", "Gémeau", "Cancer",
                     "Lion", "Vierge", "Balance", "Scorpion", "Sagittaire"];
@@ -41,10 +42,17 @@ function detruirePopin() {
     elmtMasquePopin.classList.add('open');
 }
 
-//** -----OUVERTURE POPIN----- */
-function ouverturePopin(prenom) {
+//** -----OUVERTURE POPIN SUPPRESSION----- */
+function ouverturePopinSuppression(prenom) {
     var titre = 'SUPPRESSION';
     var corps = 'Etes-vous sûr de vouloir supprimer ' + prenom + ' ?';
+    creationPopin(titre, corps);
+}
+
+//** -----OUVERTURE POPIN SUPPRESSION----- */
+function ouverturePopinVersion(version) {
+    var titre = 'VERSION';
+    var corps = version;
     creationPopin(titre, corps);
 }
 
@@ -91,7 +99,7 @@ function clickSuppr(element) {
             prenom = elmt.prenom;
         }
     })
-    ouverturePopin(prenom);
+    ouverturePopinSuppression(prenom);
 }
 
 //TODO en test
@@ -179,6 +187,46 @@ function clickSwipper() {
     }
 }
 
+/** ----- RECUPERATION DE LA VERSION DEPUIS LE SW ------ */
+function getVersion() {
+    const channel = new BroadcastChannel('sw-version');
+    channel.addEventListener('message', event => {
+        localStorage.setItem("version", event.data.version);
+        version = localStorage.getItem("version");
+        var elemtLogo = document.getElementById('logo');
+        dbleClick(elemtLogo, ouverturePopinVersion, version);
+    });
+}
+
+/** ----- AU DOUBLE CLIC SUR LE LOGO (VERSION) ------ */
+function ajoutEvtDbleClickLogo() {
+    document.getElementById('index-popin').value = 'version';
+    var elemtLogo = document.getElementById('logo');
+    version = localStorage.getItem("version");
+    dbleClick(elemtLogo, ouverturePopinVersion, version);
+}
+
+/** ----- GESTION DU DOUBLE CLIC SUR MOBILE ------ */
+function dbleClick(elmt, fonctionAppellee, argumentFonction) {
+    var touchtime = 0;
+    elmt.onclick = function() {
+        if (touchtime == 0) {
+            // set first click
+            touchtime = new Date().getTime();
+        } else {
+            // compare first click to this click and see if they occurred within double click threshold
+            if (((new Date().getTime()) - touchtime) < 800) {
+                // double click occurred
+                fonctionAppellee(argumentFonction);
+                touchtime = 0;
+            } else {
+                // not a double click so set as a new first click
+                touchtime = new Date().getTime();
+            }
+        }
+    };
+}
+
 /** ----- RETOURNE L'INDEX LE PLUS GRAND DE LA LISTE + 1 ------ */
 function recupererIndexMax() {
     storage = JSON.parse(localStorage.getItem("vignettes"));
@@ -197,7 +245,9 @@ function recupererIndexMax() {
 /** ----- AU CLIC SUR VALIDATION POPIN SUPPRESSION ------ */
 function clickOKPopin() {
     var valueIndex = document.getElementById('index-popin').value;
-    supprimerDonneeStorage(valueIndex);
+    if(valueIndex !== 'version') {
+        supprimerDonneeStorage(valueIndex);
+    }
     detruirePopin();
 }
 
@@ -595,6 +645,8 @@ function onDocumentReady() {
     calculHauteurs();
     affichageLocal();
     gestionAffichagePresentation();
+    getVersion();
+    ajoutEvtDbleClickLogo();
 }
 
 
