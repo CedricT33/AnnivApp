@@ -1,11 +1,11 @@
 {
-    "name": "AnnivApp",
-    "short_name": "AnnivApp",
+    "name": "Anniv'",
+    "short_name": "Anniv'",
     "start_url": ".",
     "background_color": "#22262e",
     "theme_color": "#22262e",
     "display": "fullscreen",
-    "description": "Application avec rappel des anniversaires",
+    "description": "Application de rappel des anniversaires",
     "lang": "fr-FR",
     "orientation": "portrait-primary",
     "icons": [

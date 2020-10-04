@@ -473,8 +473,8 @@ function creerElement(type, id, classes, content, attribut) {
 function calculAge(jour, mois, annee) {
     var date = new Date(annee, mois, jour);
     var diff = Date.now() - date.getTime();
-    var age = new Date(diff);
-    return Math.abs(age.getUTCFullYear() - 1970);
+    var age = Math.floor(diff/(1000*60*60*24*364.5));
+    return age;
 }
 
 //** -----CALCUL ZODIAC----- */
@@ -498,7 +498,7 @@ function calculZodiacChinois(annee) {
 
 //** -----CONSTRUIT VIGNETTE HTML PUIS LA RAJOUTE AU DOM----- */
 function constructionVignetteHTML(nom, prenom, jour, mois, annee, index) {
-    var elmtListConteneur = document.getElementById('list-container');
+    var elmtListConteneur = document.getElementById('liste');
     var date = "" + jour  + "/" + mois + "/" + annee;
     var nom_prenom = "" + prenom + " " + nom;
     var futurAge = calculAge(jour, mois, annee) + 1;
@@ -589,7 +589,7 @@ function miseEnOrdre(storage) {
 
 //** -----SUPPRIME LA LISTE DE VIGNETTES DU DOM----- */
 function suppressionElmtListeVignettes() {
-    var elmtConteneur = document.getElementById('list-container');
+    var elmtConteneur = document.getElementById('liste');
     while (elmtConteneur.lastElementChild) {
         elmtConteneur.removeChild(elmtConteneur.lastElementChild);
     }
@@ -624,31 +624,13 @@ function affichageLocal() {
     }
 }
 
-/** ----- CALCUL DE LA HAUTEUR POUR LE SCROLL DU LIST-CONTAINER ------ */
-function calculHauteurs() {
-    var hauteurEcran = screen.height;
-    var hauteurHeader = document.getElementsByTagName('header')[0].offsetHeight;
-    var hauteurSwipper = document.getElementById('swipper').offsetHeight;
-
-    var hauteurListe = hauteurEcran - (hauteurHeader + hauteurSwipper);
-    var hauteurFormulaire = hauteurEcran - hauteurHeader;
-    var elmtListConteneur = document.getElementById('list-container');
-    var elmtFormulaire = document.getElementById('ajout-container');
-    var elmtPresentation = document.getElementById('presentation-container');
-    elmtListConteneur.style.height = hauteurListe + 'px';
-    elmtFormulaire.style.height = hauteurFormulaire + 'px';
-    elmtPresentation.style.height = hauteurFormulaire + 'px';
-}
-
 /** -----AU CHARGEMENT DU DOM----- */
 function onDocumentReady() {
-    calculHauteurs();
     affichageLocal();
     gestionAffichagePresentation();
     getVersion();
     ajoutEvtDbleClickLogo();
 }
-
 
 /** -----AU CHARGEMENT DU DOM----- */
 document.onload = onDocumentReady();
