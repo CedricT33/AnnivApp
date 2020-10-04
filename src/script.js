@@ -469,11 +469,53 @@ function creerElement(type, id, classes, content, attribut) {
     return newElmt;
 }
 
+//** -----CALCUL ANNEE BISSEXTILE----- */
+function isAnneeBissextile() {
+    var cetteAnnee = new Date().getUTCFullYear();
+    return (cetteAnnee % 100 === 0) ? (cetteAnnee % 400 === 0) : (cetteAnnee % 4 === 0);
+}
+
+//** -----CALCUL TEMPS RESTANT JUSQU'A ANNIVERSAIRE----- */
+function calculTempsRestant(jour, mois) {
+    var cetteAnnee = new Date().getUTCFullYear();
+    var dateAnniv = new Date(cetteAnnee, mois - 1, jour);
+    var diff = dateAnniv.getTime() - Date.now();
+    if (diff > -86400000 && diff < 0) {
+        return "aujourd'hui";
+    }
+    else if (diff > 0 && diff < 86400000) {
+        return "demain";
+    }
+    else if (diff < -86400000) {
+        dateAnniv = new Date(cetteAnnee + 1, mois - 1, jour);
+        diff = dateAnniv.getTime() - Date.now();
+    }
+    var joursRestant = Math.floor(diff / (1000*60*60*24)) + 1;
+    var moisRestant = Math.floor(joursRestant / 30.4) + 1;
+    var ceMois = new Date().getMonth() + 1;
+
+    if ((ceMois === 1 || ceMois === 3 || ceMois === 5 || 
+        ceMois === 7 || ceMois === 8 || ceMois === 10 || 
+        ceMois === 12) && (joursRestant <= 31)) {
+        return 'dans ' + joursRestant + (joursRestant === 1 ? ' jour' : ' jours');
+    }
+    else if (ceMois === 2 && isAnneeBissextile && joursRestant <= 29) {
+        return 'dans ' + joursRestant + (joursRestant === 1 ? ' jour' : ' jours');
+    }
+    else if (ceMois === 2 && !isAnneeBissextile && joursRestant <= 28) {
+        return 'dans ' + joursRestant + (joursRestant === 1 ? ' jour' : ' jours');
+    }
+    else {
+        return 'dans ' + moisRestant + ' mois';
+    }
+
+}
+
 //** -----CALCUL AGE----- */
 function calculAge(jour, mois, annee) {
-    var date = new Date(annee, mois, jour);
+    var date = new Date(annee, mois - 1, jour);
     var diff = Date.now() - date.getTime();
-    var age = Math.floor(diff/(1000*60*60*24*364.5));
+    var age = Math.floor(diff/(1000*60*60*24*365.27));
     return age;
 }
 
@@ -503,6 +545,7 @@ function constructionVignetteHTML(nom, prenom, jour, mois, annee, index) {
     var nom_prenom = "" + prenom + " " + nom;
     var futurAge = calculAge(jour, mois, annee) + 1;
     var ans = futurAge > 1 ? ' ANS' : ' AN';
+    var tempsRestant = calculTempsRestant(jour, mois);
     var zodiac = calculZodiac(jour, mois);
     var zodiacChinois = calculZodiacChinois(annee);
     var elmtVignetteConteneur = creerElement('a', 0, 'vignette-container');
@@ -513,6 +556,7 @@ function constructionVignetteHTML(nom, prenom, jour, mois, annee, index) {
     var elmtCaracteristiques = creerElement('div', 0, 'caracteristique');
     var elmtAge = creerElement('div', 0, 'age active', futurAge);
     var spanAge = creerElement('span', 0, '', ans);
+    var elmtTps = creerElement('div', 0, 'age active temps-restant', tempsRestant);
     var elmtAstroNormal = creerElement('div', 0, 'astro-normal', zodiac);
     var elmtAstroChinois = creerElement('div', 0, 'astro-chinois', zodiacChinois);
     var elmtAccordeon = creerElement('div', 0, 'accordeon-content');
@@ -527,6 +571,7 @@ function constructionVignetteHTML(nom, prenom, jour, mois, annee, index) {
     elmtProfil.appendChild(elmtdate);
     elmtAge.appendChild(spanAge);
     elmtCaracteristiques.appendChild(elmtAge);
+    elmtCaracteristiques.appendChild(elmtTps);
     elmtCaracteristiques.appendChild(elmtAstroNormal);
     elmtCaracteristiques.appendChild(elmtAstroChinois);
     elmtVignette.appendChild(elmtProfil);

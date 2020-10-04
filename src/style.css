@@ -165,7 +165,8 @@ header {
 }
 
 .caracteristique {
-    justify-content: center;
+    justify-content: space-evenly;
+    text-align: right;
 }
 
 .age span {
@@ -180,12 +181,17 @@ header {
     display: block;
 }
 
+.temps-restant {
+    color: #b4b4b4;
+    font-size: 12px;
+}
+
 .profil {
     padding: 7px 25px 5px 25px;
 }
 
 .caracteristique{
-    padding: 5px 25px 5px 25px;
+    padding: 5px 25px 5px 0px;
 }
 
 .nom-prenom {
