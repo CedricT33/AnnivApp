@@ -115,7 +115,7 @@ function calculTempsJusquAAnniv(jour, mois, annee, heureNotif) {
 
 /** ----- AU CLIC SUR MODIFIER UNE VIGNETTE ------ */
 function clickModif(element) {
-    var index = element.id.substr(6,1);
+    var index = element.id.substring(6);
     remplirFormulaire(index);  
     faireApparaitrePageFormulaire();
 
