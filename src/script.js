@@ -127,7 +127,7 @@ function clickModif(element) {
 /** ----- AU CLIC SUR AJOUTER UNE VIGNETTE ------ */
 function clickAjout() {
     
-    // affichage de l'ajout sur page accueil
+    // affichage de l'ajout sur page accueil device
     if (deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(choiceResult => {
@@ -286,6 +286,35 @@ function clickOK() {
 function clickRetour() {
     faireDisparaitrePageFormulaire();
     gestionAffichagePresentation();
+}
+
+/** ----- AU CLIC SUR PARAMETRES ------ */
+function clickParams() {
+    sauvegardeCSV();
+}
+
+/** ----- SAUVEGARDE AU FORMAT CSV ------ */
+function sauvegardeCSV() {
+    var fichierCSV = 'data:text/csv;charset=utf-8,\n index,nom,prenom,jour,mois,annee\n';
+    if (storage.length !== 0) {
+        storage.forEach(elmtObjet => {
+            Object.entries(elmtObjet).forEach(([key, value]) => {
+                fichierCSV += value + ',';
+            })
+            fichierCSV += '\n';
+        })
+        downloadCSV(fichierCSV);
+    }
+}
+
+/** ----- TELECHARGEMENT DU FICHIER CSV ------ */
+function downloadCSV(fichierCSV) {
+    var encodedUri = encodeURI(fichierCSV);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "annivs.csv");
+    document.body.appendChild(link);
+    link.click();
 }
 
 /** ----- RECUPERE L'OBJET DU LOCAL STORAGE AVEC L'INDEX ------ */
@@ -649,16 +678,19 @@ function gestionAffichagePresentation() {
     var elmtListConteneur = document.getElementById('list-container');
     var elmtFleche = document.getElementById('fleche-presentation');
     var elmtPresentation = document.getElementById('presentation-container');
+    var btnParams = document.getElementById('img-params');
 
     if (!storage || storage.length == 0) {
         elmtSwipper.classList.add('hide');
         elmtListConteneur.classList.add('hide');
         elmtFleche.classList.remove('hide');
         elmtPresentation.classList.remove('hide');
+        btnParams.classList.remove('show');
     }
     else {
         elmtFleche.classList.add('hide');
         elmtPresentation.classList.add('hide');
+        btnParams.classList.add('show');
     }
 }
 

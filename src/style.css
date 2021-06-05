@@ -262,6 +262,14 @@ a {
     display: none;
 }
 
+#img-params {
+    color: #22262e;
+}
+
+#img-params.show {
+    color: #e6e6e6;
+}
+
 #img-retour::before {
     content: "\f137";
 }
@@ -271,8 +279,8 @@ a {
 }
 
 #img-params:before {
-    content: "\f013";
-    color: #22262e;
+    /*content: "\f013";*/
+    content: "\f0c7";
 }
 
 .img-suppr:before {
