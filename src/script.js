@@ -494,9 +494,12 @@ function calculTempsRestant(jour, mois) {
     var moisRestant = Math.floor(joursRestant / 30.4) + 1;
     var ceMois = new Date().getMonth() + 1;
 
-    if ((ceMois === 1 || ceMois === 3 || ceMois === 5 || 
+    if (((ceMois === 1 || ceMois === 3 || ceMois === 5 || 
         ceMois === 7 || ceMois === 8 || ceMois === 10 || 
-        ceMois === 12) && (joursRestant <= 31)) {
+        ceMois === 12) && (joursRestant <= 31))
+        || 
+        ((ceMois === 4 || ceMois === 6 || ceMois === 9 || 
+            ceMois === 11) && (joursRestant <= 30))) {
         return 'dans ' + joursRestant + (joursRestant === 1 ? ' jour' : ' jours');
     }
     else if (ceMois === 2 && isAnneeBissextile && joursRestant <= 29) {
@@ -508,13 +511,13 @@ function calculTempsRestant(jour, mois) {
     else {
         return 'dans ' + moisRestant + ' mois';
     }
-
 }
 
 //** -----CALCUL AGE----- */
 function calculAge(jour, mois, annee) {
     var date = new Date(annee, mois - 1, jour);
-    var diff = Date.now() - date.getTime();
+    var dateToday = new Date(new Date().getUTCFullYear(), new Date().getMonth(), new Date().getDate());
+    var diff = dateToday.getTime() - date.getTime();
     var age = Math.floor(diff/(1000*60*60*24*365.27));
     return age;
 }
