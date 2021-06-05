@@ -391,10 +391,12 @@ input:invalid {
     flex-direction: column;
     z-index: 1001;
     width: 80%;
+    max-height: 70%;
+    overflow: auto;
     position: fixed;
     box-shadow: 0px 0px 25px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
-    top: 25%;
+    top: 20%;
     left: 0;
     right: 0;
     background: #22262e;

@@ -15,8 +15,10 @@ var optionsNotification = {
     tag: 'confirm-notification'
 };
 var miseAJour = {
-    date: "06/06/2021",
-    texte: "TestMAJ"
+    date: "05/06/2021",
+    texte: "- Ajout d'une fonctionnalité d'enregistrement des anniversaires sur le portable.\n" +
+            "- Amélioration du temps restant avant l'anniversaire.\n" +
+            "- Popin de mises à jour (nouveautées)."
 };
 
 //** -----DESTRUCTION POPIN----- */
@@ -52,10 +54,26 @@ function ouverturePopinSuppression(prenom) {
     creationPopin(titre, corps);
 }
 
-//** -----OUVERTURE POPIN SUPPRESSION----- */
+//** -----OUVERTURE POPIN VERSION----- */
 function ouverturePopinVersion(version) {
     var titre = 'VERSION';
     var corps = version;
+    creationPopin(titre, corps);
+}
+
+//** -----OUVERTURE POPIN MAJ----- */
+function ouverturePopinMAJ(miseAJour) {
+    document.getElementById('index-popin').value = 'maj';
+    var titre = 'NOUVEAUTEES';
+    var corps = miseAJour.texte;
+    creationPopin(titre, corps);
+}
+
+//** -----OUVERTURE POPIN CSV----- */
+function ouverturePopinCSV() {
+    document.getElementById('index-popin').value = 'csv';
+    var titre = 'ENREGISTREMENT';
+    var corps = 'Voulez-vous enregistrer les anniversaires dans un fichier Annivs.csv ?';
     creationPopin(titre, corps);
 }
 
@@ -129,7 +147,6 @@ function clickModif(element) {
 
 /** ----- AU CLIC SUR AJOUTER UNE VIGNETTE ------ */
 function clickAjout() {
-    
     // affichage de l'ajout sur page accueil device
     if (deferredPrompt) {
         deferredPrompt.prompt();
@@ -245,11 +262,14 @@ function recupererIndexMax() {
     }
 }
 
-/** ----- AU CLIC SUR VALIDATION POPIN SUPPRESSION ------ */
+/** ----- AU CLIC SUR VALIDATION POPIN ------ */
 function clickOKPopin() {
     var valueIndex = document.getElementById('index-popin').value;
-    if(valueIndex !== 'version') {
+    if(valueIndex !== 'version' && valueIndex !== 'maj' && valueIndex !== 'csv') {
         supprimerDonneeStorage(valueIndex);
+    }
+    else if(valueIndex === 'csv'){
+        sauvegardeCSV();
     }
     detruirePopin();
 }
@@ -293,7 +313,7 @@ function clickRetour() {
 
 /** ----- AU CLIC SUR PARAMETRES ------ */
 function clickParams() {
-    sauvegardeCSV();
+    ouverturePopinCSV();
 }
 
 /** ----- SAUVEGARDE AU FORMAT CSV ------ */
@@ -318,6 +338,7 @@ function downloadCSV(fichierCSV) {
     link.setAttribute("download", "annivs.csv");
     document.body.appendChild(link);
     link.click();
+    //TODO afficher popin de confirmation ?
 }
 
 /** ----- RECUPERE L'OBJET DU LOCAL STORAGE AVEC L'INDEX ------ */
@@ -701,7 +722,7 @@ function gestionAffichagePresentation() {
 function affichageLocal() {
     storage = JSON.parse(localStorage.getItem("vignettes"));
     suppressionElmtListeVignettes();
-    if (storage.length !== 0) {
+    if (storage && storage.length !== 0) {
         storage = miseEnOrdre(storage);
         ajoutVignettesHTML(storage);
     }
@@ -713,8 +734,7 @@ function gestionMiseAJour() {
     if (miseAJourOld) {
         if(miseAJourOld.date !== miseAJour.date) {
             localStorage.setItem("maj", JSON.stringify(miseAJour));
-            console.log(JSON.parse(localStorage.getItem("maj"))); // TODO à suppr
-            //TODO affichage MAJ avec POPIN
+            ouverturePopinMAJ(miseAJour);
         }
     }
     else {
