@@ -14,6 +14,10 @@ var optionsNotification = {
     badge: '/images/logo96.png',
     tag: 'confirm-notification'
 };
+var miseAJour = {
+    date: "06/06/2021",
+    texte: "TestMAJ"
+};
 
 //** -----DESTRUCTION POPIN----- */
 function detruirePopin() {
@@ -27,7 +31,6 @@ function detruirePopin() {
     elmtPopin.classList.remove('open');
     elmtMasquePopin.classList.remove('open');
 }
-  
   
 //** -----CREATION POPIN----- */
   function creationPopin(titre, corps) {
@@ -698,9 +701,24 @@ function gestionAffichagePresentation() {
 function affichageLocal() {
     storage = JSON.parse(localStorage.getItem("vignettes"));
     suppressionElmtListeVignettes();
-    if (storage) {
+    if (storage.length !== 0) {
         storage = miseEnOrdre(storage);
         ajoutVignettesHTML(storage);
+    }
+}
+
+//** -----AFFICHE LES MAJ S'IL Y EN A----- */
+function gestionMiseAJour() {
+    var miseAJourOld = JSON.parse(localStorage.getItem("maj"));
+    if (miseAJourOld) {
+        if(miseAJourOld.date !== miseAJour.date) {
+            localStorage.setItem("maj", JSON.stringify(miseAJour));
+            console.log(JSON.parse(localStorage.getItem("maj"))); // TODO à suppr
+            //TODO affichage MAJ avec POPIN
+        }
+    }
+    else {
+        localStorage.setItem("maj", JSON.stringify(miseAJour));
     }
 }
 
@@ -710,6 +728,7 @@ function onDocumentReady() {
     gestionAffichagePresentation();
     getVersion();
     ajoutEvtDbleClickLogo();
+    gestionMiseAJour();
 }
 
 /** -----AU CHARGEMENT DU DOM----- */
