@@ -121,6 +121,10 @@ header {
     -webkit-tap-highlight-color: transparent;
 }
 
+#logo::before {
+    content: 'ANNIV’';
+}
+
 #logo, .age, .astro-normal, .astro-chinois {
     color: #47b5b0;
 }
