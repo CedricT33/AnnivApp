@@ -1,5 +1,5 @@
-/** ----- VALUES ------ */
-var version = '';
+/** ----- CONSTANTES ------ */
+var version = "01.00.016";
 var storage = [];
 var SIGNES_ASTRO = ["Capricorne", "Verseau", "Poisson", "Bélier", "Taureau", "Gémeau", "Cancer",
                     "Lion", "Vierge", "Balance", "Scorpion", "Sagittaire"];
@@ -15,7 +15,7 @@ var optionsNotification = {
     tag: 'confirm-notification'
 };
 var miseAJour = {
-    date: "05/06/2021",
+    date: "06/06/2021",
     texte: "- Ajout d'une fonctionnalité d'enregistrement des anniversaires sur le portable.\n" +
             "- Amélioration du temps restant avant l'anniversaire.\n" +
             "- Popin de mises à jour (nouveautées)."
@@ -208,7 +208,7 @@ function clickSwipper() {
 }
 
 /** ----- RECUPERATION DE LA VERSION DEPUIS LE SW ------ */
-function getVersion() {
+/**function getVersion() {
     const channel = new BroadcastChannel('sw-version');
     channel.addEventListener('message', event => {
         localStorage.setItem("version", event.data.version);
@@ -216,13 +216,13 @@ function getVersion() {
         var elemtLogo = document.getElementById('logo');
         dbleClick(elemtLogo, ouverturePopinVersion, version);
     });
-}
+}*/
 
 /** ----- AU DOUBLE CLIC SUR LE LOGO (VERSION) ------ */
 function ajoutEvtDbleClickLogo() {
     document.getElementById('index-popin').value = 'version';
     var elemtLogo = document.getElementById('logo');
-    version = localStorage.getItem("version");
+    //version = localStorage.getItem("version");
     dbleClick(elemtLogo, ouverturePopinVersion, version);
 }
 
@@ -746,7 +746,7 @@ function gestionMiseAJour() {
 function onDocumentReady() {
     affichageLocal();
     gestionAffichagePresentation();
-    getVersion();
+    //getVersion();
     ajoutEvtDbleClickLogo();
     gestionMiseAJour();
 }
