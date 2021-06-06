@@ -1,5 +1,5 @@
 /** ----- CONSTANTES ------ */
-var version = "01.00.016";
+var version = "01.00.017";
 var storage = [];
 var SIGNES_ASTRO = ["Capricorne", "Verseau", "Poisson", "Bélier", "Taureau", "Gémeau", "Cancer",
                     "Lion", "Vierge", "Balance", "Scorpion", "Sagittaire"];
