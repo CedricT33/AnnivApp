@@ -1,5 +1,5 @@
 /** ----- CONSTANTES ------ */
-var version = "01.00.017";
+var version = "01.00.018";
 var storage = [];
 var SIGNES_ASTRO = ["Capricorne", "Verseau", "Poisson", "Bélier", "Taureau", "Gémeau", "Cancer",
                     "Lion", "Vierge", "Balance", "Scorpion", "Sagittaire"];
@@ -15,10 +15,8 @@ var optionsNotification = {
     tag: 'confirm-notification'
 };
 var miseAJour = {
-    date: "06/06/2021",
-    texte: "- Ajout d'une fonctionnalité d'enregistrement des anniversaires sur le portable.\n" +
-            "- Amélioration du temps restant avant l'anniversaire.\n" +
-            "- Popin de mises à jour (nouveautées)."
+    date: "02/04/2023",
+    texte: "- Fix problme de suppression d'une donnée."
 };
 
 //** -----DESTRUCTION POPIN----- */
@@ -111,7 +109,7 @@ function supprimerDonneeStorage(index) {
 
 /** ----- AU CLIC SUR SUPPRIMER UNE VIGNETTE ------ */
 function clickSuppr(element) {
-    var index = element.id.substr(6,1);
+    var index = element.id.substring(6);
     document.getElementById('index-popin').value = index;
     var prenom = '';
     storage = JSON.parse(localStorage.getItem("vignettes"));
